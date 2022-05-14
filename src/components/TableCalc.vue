@@ -8,6 +8,7 @@
         <input
             type="checkbox"
             v-model="item.selected"
+            @click="getInvoiceItem(item)"
             @change="handleCheckInvoiceItem(item)"
         />
         <th>{{ item.qty }}</th>
@@ -29,7 +30,11 @@
       >
         {{totalPrice}}
       </p>
+      <p v-else> - </p>
     </div>
+    {{removeInvoiceItems}}
+    <hr />
+    my filted list - {{allListInvoice}}
   </div>
 </template>
 
@@ -54,16 +59,15 @@
     },
 
     methods: {
-      hanleDeleteInvoceItem(item) {
-        console.log(this.selected)
+      hanleDeleteInvoceItem(value) {
+        return console.log(value)
       },
 
       handleCheckInvoiceItem(item) {
-        if (item.selected === true) {
+        if(item.selected === true) {
           this.removeInvoiceItems.push(item)
-          console.log(this.removeInvoiceItems)
-        }
-      }
+        } else { this.removeInvoiceItems.splice(item, 1) }
+      },
     },
 
     computed: {
@@ -71,14 +75,14 @@
         'getAllInvoices',
       ]),
 
+      allListInvoice() {
+        return this.getAllInvoices.filter(v => this.removeInvoiceItems.indexOf(v) == -1)
+      },
+
       totalPrice() {
         return this.getAllInvoices.reduce((accumulator, object) => {
           return accumulator + object.price;
         }, 0);
-      },
-
-      allInvoicesList() {
-        return this.getAllInvoices
       }
     }
   }
