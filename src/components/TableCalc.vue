@@ -59,8 +59,12 @@
     },
 
     methods: {
-      hanleDeleteInvoceItem(value) {
-        return console.log(value)
+      hanleDeleteInvoceItem() {
+        return 'value'
+      },
+
+      getInvoiceItem(item) {
+        return item
       },
 
       handleCheckInvoiceItem(item) {
